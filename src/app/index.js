@@ -1,9 +1,10 @@
 const canvas = document.querySelector('#canvas');
 const ctx = canvas.getContext('2d');
 
-const size = 900;
+const size = window.innerWidth;
 const scale = 3;
 const resolution = size / scale;
+const opacity = 0.01;
 
 // DATA
 let cells
@@ -11,10 +12,11 @@ let cells
 setup();
 randomCells();
 displayScreen("seagreen");
-setInterval(step, 1);
+setInterval(step, 5);
 
-console.log(getNeighbourCount(1,1));
 function setup() {
+  ctx.fillStyle = "rgba(100, 30, 30, 1)";
+  ctx.fillRect(0, 0, resolution, resolution);
   canvas.width = size;
   canvas.height = size;
   ctx.scale(scale, scale);
@@ -36,7 +38,7 @@ function createCells() {
 function randomCells() {
   for(let y = 0; y < resolution; y++) {
     for(let c = 0; c < resolution; c++) {
-      if(Math.random() > 0.5) {
+      if(Math.random() < 0.1) {
         cells[y][c] = true;
       }
     }
@@ -87,6 +89,6 @@ function getNeighbourCount(x,y) {
 }
 
 function clearScreen() {
-  ctx.fillStyle = "wheat";
+  ctx.fillStyle = `rgba(100, 30, 30, ${opacity})`;
   ctx.fillRect(0, 0, resolution, resolution);
 }
