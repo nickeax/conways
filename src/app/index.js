@@ -1,9 +1,11 @@
 const canvas = document.querySelector('#canvas');
 const ctx = canvas.getContext('2d');
 
-const size = window.innerWidth;
-const scale = 3;
-const resolution = size / scale;
+const sizeX = window.innerWidth;
+const sizeY = window.innerHeight;
+const scale = 8;
+const resolutionX = sizeX / scale;
+const resolutionY = sizeY / scale;
 const opacity = 0.01;
 
 // DATA
@@ -16,18 +18,18 @@ setInterval(step, 5);
 
 function setup() {
   ctx.fillStyle = "rgba(100, 30, 30, 1)";
-  ctx.fillRect(0, 0, resolution, resolution);
-  canvas.width = size;
-  canvas.height = size;
+  ctx.fillRect(0, 0, resolutionX, resolutionY);
+  canvas.width = sizeX;
+  canvas.height = sizeY;
   ctx.scale(scale, scale);
   cells = createCells();
 }
 
 function createCells() {
   let display = [];
-  for (let y = 0; y < resolution; y++) {
+  for (let y = 0; y < resolutionY; y++) {
     let row = [];
-    for(let x = 0; x < resolution; x++) {
+    for(let x = 0; x < resolutionX; x++) {
       row.push(0);
     }
     display.push(row);
@@ -36,8 +38,8 @@ function createCells() {
 }
 
 function randomCells() {
-  for(let y = 0; y < resolution; y++) {
-    for(let c = 0; c < resolution; c++) {
+  for(let y = 0; y < resolutionY; y++) {
+    for(let c = 0; c < resolutionX; c++) {
       if(Math.random() < 0.1) {
         cells[y][c] = true;
       }
@@ -48,8 +50,8 @@ function randomCells() {
 function displayScreen(col) {
   clearScreen();
   ctx.fillStyle = col;
-  for(let rows = 0; rows < resolution; rows++) {
-    for(let cols = 0; cols < resolution; cols++) {
+  for(let rows = 0; rows < resolutionY; rows++) {
+    for(let cols = 0; cols < resolutionX; cols++) {
       if(cells[rows][cols] === true) {
         ctx.fillRect(cols, rows, 1, 1);
       }
@@ -59,8 +61,8 @@ function displayScreen(col) {
 
 function step() {
   let newCells = createCells()
-  for(let y = 0; y < resolution; y++) {
-    for(let c = 0; c < resolution; c++) {
+  for(let y = 0; y < resolutionY; y++) {
+    for(let c = 0; c < resolutionX; c++) {
       const neighbours = getNeighbourCount(c, y);
       if(cells[c][y] && neighbours >= 2 && neighbours <= 3) {
         newCells[c][y] = true;
@@ -68,6 +70,9 @@ function step() {
         newCells[c][y] = true;
       }
     }
+  }
+  if(cells === newCells) {
+    setup();
   }
   cells = newCells;
   displayScreen("firebrick");
@@ -90,5 +95,5 @@ function getNeighbourCount(x,y) {
 
 function clearScreen() {
   ctx.fillStyle = `rgba(100, 30, 30, ${opacity})`;
-  ctx.fillRect(0, 0, resolution, resolution);
+  ctx.fillRect(0, 0, resolutionX, resolutionY);
 }
