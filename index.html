@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +8,19 @@
     <link rel="stylesheet" href="src/css/index.css">
     <script src="./src/app/index.js" defer></script>
 </head>
+
 <body>
+    <div class="menu">
+        <div class="menu-container">
+            <span class="controlItem">start & restart (R)</span>
+            <span class="controlItem">cell siz(Q&UpArrow; A&ShortDownArrow;)</span>
+            <span class="controlItem">trailing fog (W&UpArrow; S&ShortDownArrow;)</span>
+            <span class = "controlItem" id="status">Gathering data... </span>
+        </div>
+    </div>
     <div class="container">
         <canvas id="canvas"></canvas>
     </div>
 </body>
+
 </html>
